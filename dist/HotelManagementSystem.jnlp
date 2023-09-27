@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="HotelManagementSystem.jnlp">
+  <information>
+    <title>HotelManagementSystem</title>
+    <vendor>Lenovo</vendor>
+    <description>null</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="HotelManagementSystem.jar" size="404778" download="eager" />
+    <jar href="lib\fontawesomefx-8.2.jar" size="180341" download="eager" />
+    <jar href="lib\jfoenix-8.0.10.jar" size="2710207" download="eager" />
+    <jar href="lib\mysql-connector-java-5.1.30.jar" size="954038" download="eager" />
+  </resources>
+  <jfx:javafx-desc  width="800" height="600" main-class="hotelmanagementsystem.HotelManagementSystem"  name="HotelManagementSystem" />
+  <update check="always"/>
+</jnlp>
