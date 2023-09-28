@@ -346,6 +346,36 @@ public class dashBoardController implements Initializable {
 
     @FXML
     private Label FloorInformation_executiveRoomT;
+    
+    @FXML
+    private Label FloorInformation_roomFo;
+
+    @FXML
+    private Label FloorInformation_standardRoomFou;
+
+    @FXML
+    private Label FloorInformation_doubleRoomFou;
+
+    @FXML
+    private Label FloorInformation_deluxRoomFou;
+
+    @FXML
+    private Label FloorInformation_executiveRoomFou;
+    
+    @FXML
+    private Label FloorInformation_roomFif;
+
+    @FXML
+    private Label FloorInformation_standardRoomFif;
+
+    @FXML
+    private Label FloorInformation_doubleRoomFif;
+
+    @FXML
+    private Label FloorInformation_deluxRoomFif;
+
+    @FXML
+    private Label FloorInformation_executiveRoomFif;
 
     @FXML
     private TableView<Group> groupInfo_TableView;
@@ -746,7 +776,7 @@ public class dashBoardController implements Initializable {
         }
     }
 
-    public void switchSubForm(ActionEvent event) {
+    public void switchSubForm(ActionEvent event) throws ClassNotFoundException, SQLException {
         //Hightlight Color
         Button clickedButton = (Button) event.getSource();
         RoomData_btn.getStyleClass().remove("btn-menu-selected");
@@ -770,6 +800,8 @@ public class dashBoardController implements Initializable {
             SCustomerInfo_Form.setVisible(false);
             SUserInfo_Form.setVisible(false);
             SCurrencyRate_Form.setVisible(false);
+            ShowRoomsData();
+            RoomsDataSearch();
         } else if (event.getSource() == RoomView_btn) {
             SRoomData_Form.setVisible(false);
             SRoomView_Form.setVisible(true);
@@ -780,6 +812,7 @@ public class dashBoardController implements Initializable {
             SCustomerInfo_Form.setVisible(false);
             SUserInfo_Form.setVisible(false);
             SCurrencyRate_Form.setVisible(false);
+            ShowRoomsView();
         } else if (event.getSource() == RoomRate_btn) {
             SRoomData_Form.setVisible(false);
             SRoomView_Form.setVisible(false);
@@ -790,6 +823,8 @@ public class dashBoardController implements Initializable {
             SCustomerInfo_Form.setVisible(false);
             SUserInfo_Form.setVisible(false);
             SCurrencyRate_Form.setVisible(false);
+            ShowRoomRatesData();
+            RoomRatesDataSearch();
         } else if (event.getSource() == FloorData_btn) {
             SRoomData_Form.setVisible(false);
             SRoomView_Form.setVisible(false);
@@ -800,6 +835,8 @@ public class dashBoardController implements Initializable {
             SCustomerInfo_Form.setVisible(false);
             SUserInfo_Form.setVisible(false);
             SCurrencyRate_Form.setVisible(false);
+            ShowFloorData();
+            FloorsDataSearch();
         } else if (event.getSource() == GroupInfo_btn) {
             SRoomData_Form.setVisible(false);
             SRoomView_Form.setVisible(false);
@@ -810,6 +847,8 @@ public class dashBoardController implements Initializable {
             SCustomerInfo_Form.setVisible(false);
             SUserInfo_Form.setVisible(false);
             SCurrencyRate_Form.setVisible(false);
+            ShowGroupsData();
+            GroupsDataSearch();
         } else if (event.getSource() == CompanyInfo_btn) {
             SRoomData_Form.setVisible(false);
             SRoomView_Form.setVisible(false);
@@ -820,6 +859,8 @@ public class dashBoardController implements Initializable {
             SCustomerInfo_Form.setVisible(false);
             SUserInfo_Form.setVisible(false);
             SCurrencyRate_Form.setVisible(false);
+            ShowCompanyData();
+            CompanyDataSearch();
         } else if (event.getSource() == CustomerInfo_btn) {
             SRoomData_Form.setVisible(false);
             SRoomView_Form.setVisible(false);
@@ -830,6 +871,8 @@ public class dashBoardController implements Initializable {
             SCustomerInfo_Form.setVisible(true);
             SUserInfo_Form.setVisible(false);
             SCurrencyRate_Form.setVisible(false);
+            ShowCustomersData();
+            CustomersDataSearch();
         } else if (event.getSource() == UserData_btn) {
             SRoomData_Form.setVisible(false);
             SRoomView_Form.setVisible(false);
@@ -840,6 +883,8 @@ public class dashBoardController implements Initializable {
             SCustomerInfo_Form.setVisible(false);
             SUserInfo_Form.setVisible(true);
             SCurrencyRate_Form.setVisible(false);
+            ShowUsersData();
+            UsersDataSearch();
         } else if (event.getSource() == CurrencyRate_btn) {
             SRoomData_Form.setVisible(false);
             SRoomView_Form.setVisible(false);
@@ -850,6 +895,8 @@ public class dashBoardController implements Initializable {
             SCustomerInfo_Form.setVisible(false);
             SUserInfo_Form.setVisible(false);
             SCurrencyRate_Form.setVisible(true);
+            ShowCurrencyData();
+            CurrencyDataSearch();
         }
     }
 
@@ -934,7 +981,7 @@ public class dashBoardController implements Initializable {
                 vdCount = rC.getRoomCount();
             } else if (rC.getRoomStatus().equals("Cleaning in progress")) {
                 hkCount = rC.getRoomCount();
-            } else if (rC.getRoomStatus().equals("Out of Order")) {
+            } else if (rC.getRoomStatus().equals("Out of Service")) {
                 oooCount = rC.getRoomCount();
             }
         }
@@ -1240,6 +1287,8 @@ public class dashBoardController implements Initializable {
         int roomCountFirst = 0;
         int roomCountSecond = 0;
         int roomCountThird = 0;
+        int roomCountFourth = 0;
+        int roomCountFifth = 0;
 
         //Room Type according to Ground Floor
         int standardCountG = 0;
@@ -1264,6 +1313,18 @@ public class dashBoardController implements Initializable {
         int doubleCountT = 0;
         int deluxCountT = 0;
         int executiveCountT = 0;
+        
+        //Room Type according to Fouth Floor
+        int standardCountFou = 0;
+        int doubleCountFou = 0;
+        int deluxCountFou = 0;
+        int executiveCountFou = 0;
+        
+        //Room Type according to Fifth Floor
+        int standardCountFif = 0;
+        int doubleCountFif = 0;
+        int deluxCountFif = 0;
+        int executiveCountFif = 0;
 
         for (Floor floorData : floorDataList) {
             if (floorData.getFloorNo().equals("Ground")) {
@@ -1314,6 +1375,30 @@ public class dashBoardController implements Initializable {
                 }
 
                 roomCountThird = roomCountThird + floorData.getCount();
+            }else if (floorData.getFloorNo().equals("Fourth")) {
+                if (floorData.getRoomType().equals("Standard Room")) {
+                    standardCountFou = floorData.getCount();
+                } else if (floorData.getRoomType().equals("Double Room")) {
+                    doubleCountFou = floorData.getCount();
+                } else if (floorData.getRoomType().equals("Delux Room")) {
+                    deluxCountFou = floorData.getCount();
+                } else if (floorData.getRoomType().equals("Executive Room")) {
+                    executiveCountFou = floorData.getCount();
+                }
+
+                roomCountFourth = roomCountFourth + floorData.getCount();
+            }else if (floorData.getFloorNo().equals("Fifth")) {
+                if (floorData.getRoomType().equals("Standard Room")) {
+                    standardCountFif = floorData.getCount();
+                } else if (floorData.getRoomType().equals("Double Room")) {
+                    doubleCountFif = floorData.getCount();
+                } else if (floorData.getRoomType().equals("Delux Room")) {
+                    deluxCountFif = floorData.getCount();
+                } else if (floorData.getRoomType().equals("Executive Room")) {
+                    executiveCountFif = floorData.getCount();
+                }
+
+                roomCountFifth = roomCountFifth + floorData.getCount();
             }
         }
 
@@ -1344,6 +1429,20 @@ public class dashBoardController implements Initializable {
         FloorInformation_doubleRoomT.setText(String.valueOf(doubleCountT));
         FloorInformation_deluxRoomT.setText(String.valueOf(deluxCountT));
         FloorInformation_executiveRoomT.setText(String.valueOf(executiveCountT));
+        
+        //For Fourth Floor Info
+        FloorInformation_roomFo.setText(String.valueOf(roomCountFourth));
+        FloorInformation_standardRoomFou.setText(String.valueOf(standardCountFou));
+        FloorInformation_doubleRoomFou.setText(String.valueOf(doubleCountFou));
+        FloorInformation_deluxRoomFou.setText(String.valueOf(deluxCountFou));
+        FloorInformation_executiveRoomFou.setText(String.valueOf(executiveCountFou));
+        
+        //For Fifth Floor Info
+        FloorInformation_roomFif.setText(String.valueOf(roomCountFifth));
+        FloorInformation_standardRoomFif.setText(String.valueOf(standardCountFif));
+        FloorInformation_doubleRoomFif.setText(String.valueOf(doubleCountFif));
+        FloorInformation_deluxRoomFif.setText(String.valueOf(deluxCountFif));
+        FloorInformation_executiveRoomFif.setText(String.valueOf(executiveCountFif));
     }
 
     public void ShowGroupsData() throws ClassNotFoundException, SQLException {
@@ -1819,8 +1918,7 @@ public class dashBoardController implements Initializable {
                         alert.setContentText("Successfully Added!");
                         alert.showAndWait();
 
-                        ShowRoomsData(); //To Update Data on the tableview
-                        ShowRoomsView();
+                        ShowRoomsData(); //To Update Data on the tableview                        
                         TextClearRoom();
                     }
                 }
