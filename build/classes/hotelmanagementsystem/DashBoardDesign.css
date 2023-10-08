@@ -84,8 +84,9 @@ and open the template in the editor.
 }
 
 .btn-menu-selected{
-    -fx-background-color: orange;
+    -fx-background-color: blue;
     -fx-background-radius: 15px;
+    -fx-alignment: center;
 }
 
 /*#00ABE4;*/

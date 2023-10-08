@@ -28,6 +28,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -45,6 +47,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -346,7 +349,7 @@ public class dashBoardController implements Initializable {
 
     @FXML
     private Label FloorInformation_executiveRoomT;
-    
+
     @FXML
     private Label FloorInformation_roomFo;
 
@@ -361,7 +364,7 @@ public class dashBoardController implements Initializable {
 
     @FXML
     private Label FloorInformation_executiveRoomFou;
-    
+
     @FXML
     private Label FloorInformation_roomFif;
 
@@ -613,15 +616,15 @@ public class dashBoardController implements Initializable {
 
     private Button selectedBtn = null;
 
-    private ObservableList<Room> roomDataList;
-    private ObservableList<Room> roomCountList;
-    private ObservableList<RoomRate> roomRateDataList;
-    private ObservableList<Floor> floorDataList;
-    private ObservableList<Group> groupDataList;
-    private ObservableList<Company> companyDataList;
-    private ObservableList<Customer> customerDataList;
-    private ObservableList<User> userDataList;
-    private ObservableList<Currency> currencyDataList;
+    private ObservableList<Room> roomDataList = null;
+    private ObservableList<Room> roomCountList = null;
+    private ObservableList<RoomRate> roomRateDataList = null;
+    private ObservableList<Floor> floorDataList = null;
+    private ObservableList<Group> groupDataList = null;
+    private ObservableList<Company> companyDataList = null;
+    private ObservableList<Customer> customerDataList = null;
+    private ObservableList<User> userDataList = null;
+    private ObservableList<Currency> currencyDataList = null;
 
     private final String[] typeList = {"Standard Room", "Double Room", "Delux Room", "Executive Room"};
     private final String[] floorList = {"Ground", "First", "Second", "Third", "Fourth", "Fifth"};
@@ -629,7 +632,38 @@ public class dashBoardController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        //Disable Past Date
+//        RoomData_LastUpdated.setDayCellFactory(picker -> new DateCell(){
+//            public void updateItem(LocalDate date, boolean empty){
+//                super.updateItem(date, true);
+//                LocalDate today = LocalDate.now();
+//                
+//                setDisable(empty || date.compareTo(today) < 0);
+//            }
+//        });        
 
+        //Input Type to Integer beta.2 START
+        RoomData_RoomPrice.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                RoomData_RoomPrice.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+        
+        roomRate_priceMMR.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue)-> {
+            if(!newValue.matches("\\d*")){
+                roomRate_priceMMR.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+        
+        roomRate_priceDollar.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue)-> {
+            if(!newValue.matches("\\d*")){
+                roomRate_priceDollar.setText(newValue.replaceAll("[\\d]", ""));
+            }
+        });
+        //Input Type to Integer beta.2 END
+        
+
+        //Initialize Default Selected Button
         RoomData_btn.getStyleClass().add("btn-menu-selected");
 
         //For Room Dropdown Data
@@ -642,9 +676,10 @@ public class dashBoardController implements Initializable {
         displayCurrencyToday();
 
         //Formating Default DatePicker
+        formatDatePicker(RoomData_LastUpdated);
+        formatDatePicker(roomRate_lastUpdated);
         formatDatePicker(currencyRate_validStart);
         formatDatePicker(currencyRate_validEnd);
-        formatDatePicker(roomRate_lastUpdated);
 
         try {
             //For Room
@@ -685,10 +720,19 @@ public class dashBoardController implements Initializable {
 
     }
 
-    public void formatDatePicker(JFXDatePicker picker) {
+    public void formatDatePicker(JFXDatePicker datepicker) {
+        datepicker.setDayCellFactory(picker -> new DateCell() {
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, true);
+                LocalDate today = LocalDate.now();
+
+                setDisable(empty || date.compareTo(today) < 0);
+            }
+        });
+
         String pattern = "dd/MM/yyyy";
-        picker.setPromptText(pattern.toLowerCase());
-        picker.setConverter(new StringConverter<LocalDate>() {
+        datepicker.setPromptText(pattern.toLowerCase());
+        datepicker.setConverter(new StringConverter<LocalDate>() {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern(pattern);
 
             @Override
@@ -709,7 +753,7 @@ public class dashBoardController implements Initializable {
                 }
             }
         });
-        picker.setEditable(false);
+        datepicker.setEditable(false);
     }
 
     public void RoomType() {
@@ -1242,6 +1286,7 @@ public class dashBoardController implements Initializable {
     }
 
     public void ShowRoomsData() throws ClassNotFoundException, SQLException {
+        RoomData_LastUpdated.setValue(LocalDate.now()); //beta.2
         DataAccessDB da = new DataAccessDB();
         roomDataList = da.RetrieveAllRoomsListData();
 
@@ -1257,6 +1302,7 @@ public class dashBoardController implements Initializable {
     }
 
     public void ShowRoomRatesData() throws ClassNotFoundException, SQLException {
+        roomRate_lastUpdated.setValue(LocalDate.now()); //beta.2
         DataAccessDB da = new DataAccessDB();
         roomRateDataList = da.RetrieveAllRoomRateData();
 
@@ -1313,13 +1359,13 @@ public class dashBoardController implements Initializable {
         int doubleCountT = 0;
         int deluxCountT = 0;
         int executiveCountT = 0;
-        
+
         //Room Type according to Fouth Floor
         int standardCountFou = 0;
         int doubleCountFou = 0;
         int deluxCountFou = 0;
         int executiveCountFou = 0;
-        
+
         //Room Type according to Fifth Floor
         int standardCountFif = 0;
         int doubleCountFif = 0;
@@ -1375,7 +1421,7 @@ public class dashBoardController implements Initializable {
                 }
 
                 roomCountThird = roomCountThird + floorData.getCount();
-            }else if (floorData.getFloorNo().equals("Fourth")) {
+            } else if (floorData.getFloorNo().equals("Fourth")) {
                 if (floorData.getRoomType().equals("Standard Room")) {
                     standardCountFou = floorData.getCount();
                 } else if (floorData.getRoomType().equals("Double Room")) {
@@ -1387,7 +1433,7 @@ public class dashBoardController implements Initializable {
                 }
 
                 roomCountFourth = roomCountFourth + floorData.getCount();
-            }else if (floorData.getFloorNo().equals("Fifth")) {
+            } else if (floorData.getFloorNo().equals("Fifth")) {
                 if (floorData.getRoomType().equals("Standard Room")) {
                     standardCountFif = floorData.getCount();
                 } else if (floorData.getRoomType().equals("Double Room")) {
@@ -1429,14 +1475,14 @@ public class dashBoardController implements Initializable {
         FloorInformation_doubleRoomT.setText(String.valueOf(doubleCountT));
         FloorInformation_deluxRoomT.setText(String.valueOf(deluxCountT));
         FloorInformation_executiveRoomT.setText(String.valueOf(executiveCountT));
-        
+
         //For Fourth Floor Info
         FloorInformation_roomFo.setText(String.valueOf(roomCountFourth));
         FloorInformation_standardRoomFou.setText(String.valueOf(standardCountFou));
         FloorInformation_doubleRoomFou.setText(String.valueOf(doubleCountFou));
         FloorInformation_deluxRoomFou.setText(String.valueOf(deluxCountFou));
         FloorInformation_executiveRoomFou.setText(String.valueOf(executiveCountFou));
-        
+
         //For Fifth Floor Info
         FloorInformation_roomFif.setText(String.valueOf(roomCountFifth));
         FloorInformation_standardRoomFif.setText(String.valueOf(standardCountFif));
@@ -2139,28 +2185,47 @@ public class dashBoardController implements Initializable {
                 alert.setContentText("Please fill all fields");
                 alert.showAndWait();
             } else {
-                DataAccessDB da = new DataAccessDB();
-                Room room = new Room();
-                room.setRoomNumber(roomNo);
-                room.setRoomType(roomTp);
-                room.setFloorNumber(floorNo);
-                room.setRoomStatus(status);
-                room.setPrice(price);
-                room.setLastUpdated(lastUpdate);
-                check = da.UpdateRoomData(room);
+                //beta.2 START
+                List<String> roomList = new ArrayList<>();
+                for (Room r : roomDataList) {
+                    String rNo = r.getRoomNumber();
+                    roomList.add(rNo);
+                }
 
-                if (check) {
-                    alert = new Alert(Alert.AlertType.INFORMATION);
+                if (!roomList.contains(roomNo)) {
+                    alert = new Alert(AlertType.ERROR);
                     Stage owner = Stage.class.cast(Control.class.cast(event.getSource()).getScene().getWindow());
                     alert.initOwner(owner);
-                    alert.setTitle("Updating Record");
+                    alert.setTitle("Error Message");
                     alert.setHeaderText(null);
-                    alert.setContentText("Successfully Updated!");
+                    alert.setContentText("Room No. " + roomNo + " does not exist!");
                     alert.showAndWait();
 
-                    ShowRoomsData(); //To Update Data on the tableview
-                    TextClearRoom();
+                } else {
+                    DataAccessDB da = new DataAccessDB();
+                    Room room = new Room();
+                    room.setRoomNumber(roomNo);
+                    room.setRoomType(roomTp);
+                    room.setFloorNumber(floorNo);
+                    room.setRoomStatus(status);
+                    room.setPrice(price);
+                    room.setLastUpdated(lastUpdate);
+                    check = da.UpdateRoomData(room);
+
+                    if (check) {
+                        alert = new Alert(Alert.AlertType.INFORMATION);
+                        Stage owner = Stage.class.cast(Control.class.cast(event.getSource()).getScene().getWindow());
+                        alert.initOwner(owner);
+                        alert.setTitle("Updating Record");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Successfully Updated!");
+                        alert.showAndWait();
+
+                        ShowRoomsData(); //To Update Data on the tableview
+                        TextClearRoom();
+                    }
                 }
+                //beta.2 END                
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -2189,29 +2254,47 @@ public class dashBoardController implements Initializable {
                 alert.setContentText("Please fill all fields");
                 alert.showAndWait();
             } else {
-                DataAccessDB da = new DataAccessDB();
-                RoomRate r = new RoomRate();
-                r.setRateCd(rateCd);
-                r.setRateCdNm(rateCdNm);
-                r.setRoomType(roomType);
-                r.setPriceMMR(priceMM);
-                r.setPriceDollar(priceD);
-                r.setLastUpdated(lastUpdate);
-                check = da.UpdateRoomRateData(r);
+                //beta.2 START
+                List<String> rCdList = new ArrayList<>();
+                for (RoomRate rr : roomRateDataList) {
+                    String rCd = rr.getRateCd();
+                    rCdList.add(rCd);
+                }
 
-                if (check) {
-                    alert = new Alert(Alert.AlertType.INFORMATION);
+                if (!rCdList.contains(rateCd)) {
+                    alert = new Alert(AlertType.ERROR);
                     Stage owner = Stage.class.cast(Control.class.cast(event.getSource()).getScene().getWindow());
                     alert.initOwner(owner);
-                    alert.setTitle("Updating Record");
+                    alert.setTitle("Error Message");
                     alert.setHeaderText(null);
-                    alert.setContentText(rateCd + " has been successfully Updated!");
+                    alert.setContentText("Rate Code No. " + rateCd + " does not exist!");
                     alert.showAndWait();
+                } else {
+                    DataAccessDB da = new DataAccessDB();
+                    RoomRate r = new RoomRate();
+                    r.setRateCd(rateCd);
+                    r.setRateCdNm(rateCdNm);
+                    r.setRoomType(roomType);
+                    r.setPriceMMR(priceMM);
+                    r.setPriceDollar(priceD);
+                    r.setLastUpdated(lastUpdate);
+                    check = da.UpdateRoomRateData(r);
 
-                    ShowRoomRatesData(); //To Update Data on the tableview
-                    RoomRatesDataSearch();
-                    TextClearRoomRate();
+                    if (check) {
+                        alert = new Alert(Alert.AlertType.INFORMATION);
+                        Stage owner = Stage.class.cast(Control.class.cast(event.getSource()).getScene().getWindow());
+                        alert.initOwner(owner);
+                        alert.setTitle("Updating Record");
+                        alert.setHeaderText(null);
+                        alert.setContentText(rateCd + " has been successfully Updated!");
+                        alert.showAndWait();
+
+                        ShowRoomRatesData(); //To Update Data on the tableview
+                        RoomRatesDataSearch();
+                        TextClearRoomRate();
+                    }
                 }
+                //beta.2 END             
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -2618,7 +2701,7 @@ public class dashBoardController implements Initializable {
         RoomData_FloorNo.getSelectionModel().clearSelection();
         RoomData_RoomStatus.getSelectionModel().clearSelection();
         RoomData_RoomPrice.setText("");
-        RoomData_LastUpdated.setValue(null);
+//        RoomData_LastUpdated.setValue(null); //beta.2
     }
 
     public void TextClearRoomRate() {
@@ -2628,7 +2711,7 @@ public class dashBoardController implements Initializable {
         roomRate_roomType.getSelectionModel().clearSelection();
         roomRate_priceMMR.setText("");
         roomRate_priceDollar.setText("");
-        roomRate_lastUpdated.setValue(null);
+//        roomRate_lastUpdated.setValue(null); //beta.2
     }
 
     public void TextClearUser() {

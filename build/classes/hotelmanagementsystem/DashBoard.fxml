@@ -9,6 +9,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -209,10 +210,10 @@
                                                       <String fx:value="shadow" />
                                                    </styleClass>
                                                    <children>
-                                                      <JFXButton fx:id="FloorData_btn" layoutX="65.0" layoutY="268.0" onAction="#switchSubForm" prefHeight="20.0" prefWidth="111.0" styleClass="btn-menu" stylesheets="@DashBoardDesign.css" text="Floor Data" AnchorPane.bottomAnchor="553.0" />
-                                                      <JFXButton fx:id="CustomerInfo_btn" layoutX="64.0" layoutY="477.0" onAction="#switchSubForm" prefHeight="38.0" prefWidth="144.0" styleClass="btn-menu" stylesheets="@DashBoardDesign.css" text="Customer Info" AnchorPane.bottomAnchor="344.0" />
-                                                      <JFXButton fx:id="UserData_btn" layoutX="63.0" layoutY="547.0" onAction="#switchSubForm" prefHeight="20.0" prefWidth="113.0" styleClass="btn-menu" stylesheets="@DashBoardDesign.css" text="User Data" AnchorPane.bottomAnchor="274.0" />
-                                                      <JFXButton fx:id="CurrencyRate_btn" layoutX="67.0" layoutY="617.0" onAction="#switchSubForm" prefHeight="20.0" prefWidth="141.0" styleClass="btn-menu" stylesheets="@DashBoardDesign.css" text="Currency Rate" AnchorPane.bottomAnchor="204.0" />
+                                                      <JFXButton fx:id="FloorData_btn" alignment="TOP_LEFT" buttonType="RAISED" layoutX="65.0" layoutY="266.0" onAction="#switchSubForm" prefHeight="20.0" prefWidth="150.0" styleClass="btn-menu" stylesheets="@DashBoardDesign.css" text="Floor Data" AnchorPane.bottomAnchor="555.0" AnchorPane.leftAnchor="65.0" />
+                                                      <JFXButton fx:id="CustomerInfo_btn" alignment="TOP_LEFT" buttonType="RAISED" layoutX="65.0" layoutY="475.0" onAction="#switchSubForm" prefHeight="38.0" prefWidth="150.0" styleClass="btn-menu" stylesheets="@DashBoardDesign.css" text="Customer Info" AnchorPane.bottomAnchor="346.0" AnchorPane.leftAnchor="65.0" />
+                                                      <JFXButton fx:id="UserData_btn" alignment="TOP_LEFT" buttonType="RAISED" layoutX="65.0" layoutY="545.0" onAction="#switchSubForm" prefHeight="20.0" prefWidth="150.0" styleClass="btn-menu" stylesheets="@DashBoardDesign.css" text="User Data" AnchorPane.bottomAnchor="276.0" AnchorPane.leftAnchor="65.0" />
+                                                      <JFXButton fx:id="CurrencyRate_btn" alignment="TOP_LEFT" buttonType="RAISED" layoutX="65.0" layoutY="614.0" onAction="#switchSubForm" prefHeight="20.0" prefWidth="150.0" styleClass="btn-menu" stylesheets="@DashBoardDesign.css" text="Currency Rate" AnchorPane.bottomAnchor="207.0" AnchorPane.leftAnchor="65.0" />
                                                       <JFXButton fx:id="Logout_btn" buttonType="RAISED" contentDisplay="CENTER" layoutX="91.0" layoutY="730.0" onAction="#Logout" prefHeight="59.0" prefWidth="63.0" style="-fx-background-color: blue;" stylesheets="@DashBoardDesign.css" text=" ">
                                                          <graphic>
                                                             <FontAwesomeIcon fill="WHITE" glyphName="SIGN_OUT" size="2.5em" />
@@ -222,8 +223,8 @@
                                                             <String fx:value="white-bg" />
                                                          </styleClass>
                                                       </JFXButton>
-                                                      <JFXButton fx:id="RoomData_btn" layoutX="65.0" layoutY="61.0" onAction="#switchSubForm" prefHeight="20.0" prefWidth="116.0" styleClass="btn-menu" stylesheets="@DashBoardDesign.css" text="Room Data" />
-                                                      <JFXButton fx:id="RoomView_btn" layoutX="64.0" layoutY="131.0" onAction="#switchSubForm" prefHeight="20.0" prefWidth="116.0" styleClass="btn-menu" stylesheets="@DashBoardDesign.css" text="Room View" />
+                                                      <JFXButton fx:id="RoomData_btn" alignment="TOP_LEFT" buttonType="RAISED" layoutX="65.0" layoutY="61.0" onAction="#switchSubForm" prefHeight="20.0" prefWidth="150.0" styleClass="btn-menu" stylesheets="@DashBoardDesign.css" text="Room Data" AnchorPane.leftAnchor="65.0" />
+                                                      <JFXButton fx:id="RoomView_btn" alignment="TOP_LEFT" buttonType="RAISED" layoutX="64.0" layoutY="131.0" onAction="#switchSubForm" prefHeight="20.0" prefWidth="150.0" styleClass="btn-menu" stylesheets="@DashBoardDesign.css" text="Room View" AnchorPane.leftAnchor="65.0" />
                                                       <Label layoutX="97.0" layoutY="818.0" text="Logout" textFill="WHITE">
                                                          <font>
                                                             <Font name="System Bold" size="20.0" />
@@ -241,13 +242,13 @@
                                                       <FontAwesomeIcon glyphName="USER" layoutX="32.0" layoutY="567.0" size="0.8em" />
                                                       <Circle fill="WHITE" layoutX="37.0" layoutY="633.0" radius="17.0" stroke="BLUE" strokeType="INSIDE" />
                                                       <FontAwesomeIcon glyphName="DOLLAR" layoutX="34.0" layoutY="637.0" size="0.8em" />
-                                                      <JFXButton fx:id="RoomRate_btn" layoutX="64.0" layoutY="197.0" onAction="#switchSubForm" prefHeight="20.0" prefWidth="116.0" styleClass="btn-menu" stylesheets="@DashBoardDesign.css" text="Room Rate" />
+                                                      <JFXButton fx:id="RoomRate_btn" alignment="TOP_LEFT" buttonType="RAISED" layoutX="64.0" layoutY="197.0" onAction="#switchSubForm" prefHeight="20.0" prefWidth="150.0" styleClass="btn-menu" stylesheets="@DashBoardDesign.css" text="Room Rate" AnchorPane.leftAnchor="65.0" />
                                                       <Circle fill="WHITE" layoutX="36.0" layoutY="215.0" radius="17.0" stroke="BLUE" strokeType="INSIDE" />
                                                       <FontAwesomeIcon glyphName="STRIKETHROUGH" layoutX="31.0" layoutY="219.0" size="0.8em" />
-                                                      <JFXButton fx:id="GroupInfo_btn" layoutX="63.0" layoutY="337.0" onAction="#switchSubForm" prefHeight="38.0" prefWidth="120.0" styleClass="btn-menu" stylesheets="@DashBoardDesign.css" text="Group Info" />
+                                                      <JFXButton fx:id="GroupInfo_btn" alignment="TOP_LEFT" buttonType="RAISED" layoutX="65.0" layoutY="335.0" onAction="#switchSubForm" prefHeight="38.0" prefWidth="150.0" styleClass="btn-menu" stylesheets="@DashBoardDesign.css" text="Group Info" AnchorPane.leftAnchor="65.0" />
                                                       <Circle fill="WHITE" layoutX="37.0" layoutY="355.0" radius="17.0" stroke="BLUE" strokeType="INSIDE" />
                                                       <FontAwesomeIcon glyphName="GROUP" layoutX="28.0" layoutY="360.0" />
-                                                      <JFXButton fx:id="CompanyInfo_btn" layoutX="66.0" layoutY="407.0" onAction="#switchSubForm" prefHeight="38.0" prefWidth="138.0" styleClass="btn-menu" stylesheets="@DashBoardDesign.css" text="Company Info" />
+                                                      <JFXButton fx:id="CompanyInfo_btn" alignment="TOP_LEFT" buttonType="RAISED" layoutX="65.0" layoutY="404.0" onAction="#switchSubForm" prefHeight="38.0" prefWidth="150.0" styleClass="btn-menu" stylesheets="@DashBoardDesign.css" text="Company Info" AnchorPane.leftAnchor="65.0" />
                                                       <Circle fill="WHITE" layoutX="37.0" layoutY="425.0" radius="17.0" stroke="BLUE" strokeType="INSIDE" />
                                                       <FontAwesomeIcon glyphName="CC" layoutX="29.0" layoutY="430.0" />
                                                       <Line endX="100.0" layoutX="123.0" layoutY="707.0" startX="-100.0" stroke="WHITE" strokeWidth="2.0" />
@@ -259,7 +260,7 @@
                                        <center>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                              <children>
-                                                <AnchorPane fx:id="SRoomData_Form" layoutX="157.0" layoutY="100.0" prefHeight="869.0" prefWidth="1555.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <AnchorPane fx:id="SRoomData_Form" layoutX="157.0" layoutY="100.0" prefHeight="869.0" prefWidth="1555.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <children>
                                                       <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="844.0" prefWidth="438.0" stylesheets="@DashBoardDesign.css">
                                                          <styleClass>
@@ -691,7 +692,7 @@
                                                       </AnchorPane>
                                                    </children>
                                                 </AnchorPane>
-                                                <AnchorPane fx:id="SFloorData_Form" layoutX="53.0" layoutY="31.0" prefHeight="869.0" prefWidth="1555.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <AnchorPane fx:id="SFloorData_Form" layoutX="53.0" layoutY="31.0" prefHeight="869.0" prefWidth="1555.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <children>
                                                       <AnchorPane layoutX="10.0" layoutY="12.0" prefHeight="847.0" prefWidth="505.0" stylesheets="@DashBoardDesign.css">
                                                          <children>
@@ -1491,4 +1492,7 @@
          </children>
       </StackPane>
    </children>
+   <effect>
+      <DropShadow />
+   </effect>
 </AnchorPane>
