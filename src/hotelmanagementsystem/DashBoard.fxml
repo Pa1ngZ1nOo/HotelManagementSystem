@@ -198,7 +198,7 @@
                      <center>
                         <AnchorPane prefHeight="860.0" prefWidth="1800.0" BorderPane.alignment="CENTER">
                            <children>
-                              <AnchorPane fx:id="masterData_Form" layoutX="382.0" layoutY="155.0" prefHeight="919.0" prefWidth="1800.0" style="-fx-background-color: #fff;" styleClass="shadow" stylesheets="@DashBoardDesign.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <AnchorPane fx:id="masterData_Form" layoutX="382.0" layoutY="155.0" prefHeight="919.0" prefWidth="1800.0" style="-fx-background-color: #fff;" styleClass="shadow" stylesheets="@DashBoardDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
                                     <BorderPane layoutX="261.0" layoutY="146.0" prefHeight="869.0" prefWidth="1800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <left>
@@ -1483,7 +1483,7 @@
                                        </center>
                                     </BorderPane>
                                  </children></AnchorPane>
-                              <AnchorPane layoutX="391.0" layoutY="96.0" prefHeight="869.0" prefWidth="1800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <AnchorPane fx:id="Reservation_Form" layoutX="391.0" layoutY="96.0" prefHeight="869.0" prefWidth="1800.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
                                     <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="414.0" prefWidth="1771.0" stylesheets="@DashBoardDesign.css">
                                        <styleClass>
